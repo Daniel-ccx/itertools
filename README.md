@@ -8,7 +8,7 @@ transition: fade
 
 [![Build Status](https://travis-ci.org/yanatan16/itertools.png?branch=master)](http://travis-ci.org/yanatan16/itertools)
 
-This package is a translation of the python `itertools` module. It includes all the usual suspects except for the cartesian product and permutation operators. All iterators are `chan interface{}` which allows some type ambiguity for these generic functions. It would be completely ok, however, to reproduce these functions in your package for your type-specific iterators such as `chan MyStruct`. I did this mostly as a thought exercise on converting python generators to Go.
+This package is a translation of the python `itertools` module. It includes all the usual suspects except for the cartesian product and permutation operators(除了笛卡尔积和排列组合). All iterators are `chan interface{}` which allows some type ambiguity for these generic functions. It would be completely ok, however, to reproduce these functions in your package for your type-specific iterators such as `chan MyStruct`. I did this mostly as a thought exercise on converting python generators to Go.
 
 Full documentation is available on [godoc](http://godoc.org/github.com/yanatan16/itertools).
 
