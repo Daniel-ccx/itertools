@@ -1,9 +1,24 @@
 package itertools
 
 import (
-	"testing"
 	"reflect"
+	"testing"
 )
+func TestCombinations(t *testing.T) {
+	cs := Combinations(4,"a","b","c", "d")
+	for c,vv := range cs {
+		//t := vv
+		println("1:", c)
+		if vv == nil {
+			continue
+		}
+		for i, v := range vv.([]interface{}) {
+			//fmt.Printf("%T, %v", v, v)
+			println("2:", i, v.(string))
+		}
+
+	}
+}
 
 // Test iterators for element equality. Allow it1 to be longer than it2
 func testIter(t *testing.T, it1, it2 Iter) {
