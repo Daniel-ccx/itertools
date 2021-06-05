@@ -5,6 +5,7 @@
 package itertools
 
 import (
+	"sort"
 	"sync"
 )
 
@@ -13,7 +14,59 @@ type Predicate func (interface{}) bool
 type Mapper func (interface{}) interface{}
 type MultiMapper func (...interface{}) interface{}
 type Reducer func (memo interface{}, element interface{}) interface{}
+func Combinations(r int, els ... interface{}) []interface{} {
+	c := make([]interface{}, 0)
+	pool := make([]interface{}, 0)
+	//# combinations('ABCD', 2) --> AB AC AD BC BD CD
+	//# combinations(range(4), 3) --> 012 013 023 123
+	n := len(els)
+	// 返回结果的总个数
+	m := n*(n-1)/2
+	if r > n {
+		return nil
+	}
 
+	indices := make([]int, r)
+	for i := 0; i < r; i++ {
+		indices[i] = i
+	}
+	for _, v := range els {
+		pool = append(pool, v)
+	}
+	// 获取第一个
+	c = append(c, pool[indices[0]: r])
+	indicesReverse := indices
+	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
+
+	for {
+		if m <= len(c) {
+			return c
+		}
+		for i := range indicesReverse {
+			println("indicesReverse:", i, indices[i], i + n - r)
+			if indices[i] != i + n - r {
+				indices[i] += 1
+				var tmp []int
+				if i + 1 < r {
+					for ti := 0; ti < (r - i - 1); ti++ {
+						tmp[ti] = ti
+					}
+				}
+
+				for j := range tmp {
+					indices[j] = indices[j - 1] + 1
+				}
+
+				var it []interface{}
+				for _,v := range indices {
+					it = append(it, pool[v])
+				}
+				c = append(c, it)
+			}
+		}
+
+	}
+}
 func New(els ... interface{}) Iter {
 	c := make(Iter)
 	go func () {
