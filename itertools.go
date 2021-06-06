@@ -6,6 +6,7 @@ package itertools
 
 import (
 	"sort"
+	"strings"
 	"sync"
 )
 
@@ -14,17 +15,30 @@ type Predicate func (interface{}) bool
 type Mapper func (interface{}) interface{}
 type MultiMapper func (...interface{}) interface{}
 type Reducer func (memo interface{}, element interface{}) interface{}
+func Permutations(r int, els ... interface{}) (c[]string) {
 
-func Combinations(r int, els ... interface{}) []interface{} {
-	c := make([]interface{}, 0)
-	pool := make([]interface{}, 0)
+	return
+}
+func factorial(n int) int {
+	if n < 0 {
+		return 0
+	}
+	facVal := 1
+	for i := 1; i <= n ; i++  {
+		facVal *= i
+	}
+	return facVal
+}
+func Combinations(r int, els ... interface{}) (c []string){
+	pool := make([]string, 0)
 	//# combinations('ABCD', 2) --> AB AC AD BC BD CD
 	//# combinations(range(4), 3) --> 012 013 023 123
 	n := len(els)
+	if r >= n {
+		return nil
+	}
 	// 返回结果的总个数
-	m := n*(n-1)/r
-
-
+	m := factorial(n)/factorial(r)/factorial(n-r)
 	indices := make([]int, r)
 	indicesReverse := make([]int, r)
 	for i := 0; i < r; i++ {
@@ -32,16 +46,13 @@ func Combinations(r int, els ... interface{}) []interface{} {
 		indicesReverse[i] = i
 	}
 	for _, v := range els {
-		pool = append(pool, v)
+		pool = append(pool, v.(string))
 	}
 	// 获取第一个
-	c = append(c, pool[indices[0]: r])
-	if r >= n {
-		return c
-	}
-
+	first := pool[indices[0]: r]
+	firstItem := strings.Join(first, ",")
+	c = append(c, firstItem)
 	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
-
 	for {
 		if m <= len(c) {
 			return c
@@ -53,7 +64,6 @@ func Combinations(r int, els ... interface{}) []interface{} {
 				break
 			}
 		}
-
 		indices[i] += 1
 		var tmp []int
 		if i + 1 < r {
@@ -64,16 +74,14 @@ func Combinations(r int, els ... interface{}) []interface{} {
 				ti++
 			}
 		}
-
 		for _,j := range tmp {
 			indices[j] = indices[j - 1] + 1
 		}
-
-		var it []interface{}
+		var it []string
 		for _,v := range indices {
 			it = append(it, pool[v])
 		}
-		c = append(c, it)
+		c = append(c, strings.Join(it, ","))
 	}
 }
 func New(els ... interface{}) Iter {
