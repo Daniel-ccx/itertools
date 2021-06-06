@@ -5,7 +5,6 @@
 package itertools
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 	"sync"
@@ -27,51 +26,76 @@ func Permutations(r int, els ... interface{}) (c[]string) {
 	}
 	// 返回结果的总个数
 	m := factorial(n)/factorial(n-r)
-	indices := make([]int, r)
+
+	indices := make([]int, n)
 	indicesReverse := make([]int, r)
-	for i := 0; i < r; i++ {
+	for i := 0; i < n; i++ {
 		indices[i] = i
+	}
+	for i := 0; i < r; i++ {
 		indicesReverse[i] = i
 	}
+
 	for _, v := range els {
 		pool = append(pool, v.(string))
 	}
+
 	// 获取第一个
 	first := pool[indices[0]: r]
 	firstItem := strings.Join(first, ",")
 	c = append(c, firstItem)
 	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
+
 	var cycles []int
-	for i := n; n > n - r; n-- {
+
+	for i := n; i > n - r; i-- {
 		cycles = append(cycles, i)
 	}
+	//fmt.Printf("%v", cycles)
+	//return
 	for m > len(c) {
 		for _, ii := range indicesReverse {
 			cycles[ii] -= 1
 			if cycles[ii] == 0 {
 				//indices[i:] = indices[i+1:] + indices[i:i+1]
 				tmp := append(indices[ii+1:], indices[ii: ii+1]...)
-
-				fmt.Printf("%v", tmp)
+				indices = append(indices[0: len(indices)-len(tmp)], tmp...)
+				//if ii == 0 {
+				//	indices = tmp
+				//} else {
+				//	indices = append(indices[0: ii], tmp...)
+				//}
 
 				cycles[ii] = n - ii
 			} else {
+				j := cycles[ii]
+				j = len(indices)-j
 
+				iiv := indices[ii]
+				jv := indices[j]
+				indices[ii] = jv
+				indices[j] = iiv
+				var it []string
+				for _,v := range indices[0:r] {
+					it = append(it, pool[v])
+				}
+				c = append(c, strings.Join(it, ","))
+				break
 			}
 		}
 	}
 	return c
 }
-//func wwapArray(ori []int, oriFi int, oriTi int , src []int, srcFi int, srcTi int)[]int {
-//
-//}
+
 func factorial(n int) int {
 	if n < 0 {
 		return 0
 	}
 	facVal := 1
-	for i := 1; i <= n ; i++  {
+	i := 1
+	for i <= n {
 		facVal *= i
+		i++
 	}
 	return facVal
 }
