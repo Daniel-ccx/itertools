@@ -5,6 +5,7 @@
 package itertools
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 	"sync"
@@ -17,8 +18,53 @@ type MultiMapper func (...interface{}) interface{}
 type Reducer func (memo interface{}, element interface{}) interface{}
 func Permutations(r int, els ... interface{}) (c[]string) {
 
-	return
+	//# permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
+	//# permutations(range(3)) --> 012 021 102 120 201 210
+	pool := make([]string, 0)
+	n := len(els)
+	if r >= n {
+		return nil
+	}
+	// 返回结果的总个数
+	m := factorial(n)/factorial(n-r)
+	indices := make([]int, r)
+	indicesReverse := make([]int, r)
+	for i := 0; i < r; i++ {
+		indices[i] = i
+		indicesReverse[i] = i
+	}
+	for _, v := range els {
+		pool = append(pool, v.(string))
+	}
+	// 获取第一个
+	first := pool[indices[0]: r]
+	firstItem := strings.Join(first, ",")
+	c = append(c, firstItem)
+	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
+	var cycles []int
+	for i := n; n > n - r; n-- {
+		cycles = append(cycles, i)
+	}
+	for m > len(c) {
+		for _, ii := range indicesReverse {
+			cycles[ii] -= 1
+			if cycles[ii] == 0 {
+				//indices[i:] = indices[i+1:] + indices[i:i+1]
+				tmp := append(indices[ii+1:], indices[ii: ii+1]...)
+
+				fmt.Printf("%v", tmp)
+
+				cycles[ii] = n - ii
+			} else {
+
+			}
+		}
+	}
+	return c
 }
+//func wwapArray(ori []int, oriFi int, oriTi int , src []int, srcFi int, srcTi int)[]int {
+//
+//}
 func factorial(n int) int {
 	if n < 0 {
 		return 0
@@ -53,10 +99,7 @@ func Combinations(r int, els ... interface{}) (c []string){
 	firstItem := strings.Join(first, ",")
 	c = append(c, firstItem)
 	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
-	for {
-		if m <= len(c) {
-			return c
-		}
+	for m > len(c) {
 		var i = 0
 		for ii := range indicesReverse {
 			i = indicesReverse[ii]
@@ -83,6 +126,8 @@ func Combinations(r int, els ... interface{}) (c []string){
 		}
 		c = append(c, strings.Join(it, ","))
 	}
+
+	return c
 }
 func New(els ... interface{}) Iter {
 	c := make(Iter)

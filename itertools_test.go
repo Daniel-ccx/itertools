@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 func TestCombinations(t *testing.T) {
-	cs := Combinations(3,"a","b","c","d", "e")
+	cs := Combinations(3,"a","b","c","d", "e", "f")
 	for c,vv := range cs {
 		//t := vv
 		println(c, vv)
