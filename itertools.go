@@ -104,7 +104,7 @@ func Combinations(r int, els ... interface{}) (c []string){
 	//# combinations('ABCD', 2) --> AB AC AD BC BD CD
 	//# combinations(range(4), 3) --> 012 013 023 123
 	n := len(els)
-	if r >= n {
+	if r > n {
 		return nil
 	}
 	// 返回结果的总个数
@@ -122,6 +122,9 @@ func Combinations(r int, els ... interface{}) (c []string){
 	first := pool[indices[0]: r]
 	firstItem := strings.Join(first, ",")
 	c = append(c, firstItem)
+	if r == n {
+		return c
+	}
 	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
 	for m > len(c) {
 		var i = 0

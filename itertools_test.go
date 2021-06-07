@@ -6,19 +6,19 @@ import (
 )
 func TestPermutations(t *testing.T) {
 	println("理论值(个)：", factorial(7)/factorial(7-3))
-	cs := Permutations(3,"a","b","c","d", "e", "f", "g")
-	for c,vv := range cs {
-		//t := vv
-		println(c, vv)
-	}
-
-}
-func TestCombinations(t *testing.T) {
-	Combinations(3,"a","b","c","d", "e", "f")
+	//cs := Permutations(3,"a","b","c","d", "e", "f", "g")
 	//for c,vv := range cs {
 	//	//t := vv
 	//	println(c, vv)
 	//}
+
+}
+func TestCombinations(t *testing.T) {
+	cs := Combinations(6,"a","b","c","d", "e", "f")
+	for c,vv := range cs {
+		//t := vv
+		println(c, vv)
+	}
 }
 
 // Test iterators for element equality. Allow it1 to be longer than it2
