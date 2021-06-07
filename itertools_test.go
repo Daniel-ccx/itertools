@@ -14,7 +14,9 @@ func TestPermutations(t *testing.T) {
 
 }
 func TestCombinations(t *testing.T) {
-	cs := Combinations(6,"a","b","c","d", "e", "f")
+	//cs := Combinations(6,"a","b","c","d", "e", "f")
+	els := []string{"a","b","c","d", "e", "f"}
+	cs := Combinations(3, els)
 	for c,vv := range cs {
 		//t := vv
 		println(c, vv)

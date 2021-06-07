@@ -99,7 +99,9 @@ func factorial(n int) int {
 	}
 	return facVal
 }
-func Combinations(r int, els ... interface{}) (c []string){
+func Combinations(r int, els[]string) (c []string){
+ 	println(len(els))
+
 	pool := make([]string, 0)
 	//# combinations('ABCD', 2) --> AB AC AD BC BD CD
 	//# combinations(range(4), 3) --> 012 013 023 123
@@ -116,7 +118,7 @@ func Combinations(r int, els ... interface{}) (c []string){
 		indicesReverse[i] = i
 	}
 	for _, v := range els {
-		pool = append(pool, v.(string))
+		pool = append(pool, v)
 	}
 	// 获取第一个
 	first := pool[indices[0]: r]
