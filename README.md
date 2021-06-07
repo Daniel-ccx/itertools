@@ -4,7 +4,7 @@ theme: night
 transition: fade
 -->
 # 使用方法
-> github.com/Daniel-ccx/itertools
+> go get github.com/Daniel-ccx/itertools
 # Itertools for golang
 
 [![Build Status](https://travis-ci.org/yanatan16/itertools.png?branch=master)](http://travis-ci.org/yanatan16/itertools)
