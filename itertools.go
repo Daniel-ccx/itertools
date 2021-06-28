@@ -86,8 +86,8 @@ func Permutations(r int, els ... interface{}) (c[]string) {
 	}
 	return c
 }
-
-func factorial(n3 int) int64 {
+//Factorial 阶乘
+func Factorial(n3 int) int64 {
 	n := int64(n3)
 	if n < 0 {
 		return 0
