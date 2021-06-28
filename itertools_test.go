@@ -15,12 +15,13 @@ func TestPermutations(t *testing.T) {
 }
 func TestCombinations(t *testing.T) {
 	//cs := Combinations(6,"a","b","c","d", "e", "f")
-	els := []string{"a","b","c","d", "e", "f"}
-	cs := Combinations(3, els)
-	for c,vv := range cs {
-		//t := vv
-		println(c, vv)
-	}
+	els := []string{"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"}
+	cs := Combinations(6, els)
+	println(len(cs))
+	//for c,_ := range cs {
+	//	//t := vv
+	//	print(c, "-")
+	//}
 }
 
 // Test iterators for element equality. Allow it1 to be longer than it2

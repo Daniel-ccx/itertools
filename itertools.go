@@ -25,7 +25,7 @@ func Permutations(r int, els ... interface{}) (c[]string) {
 		return nil
 	}
 	// 返回结果的总个数
-	m := factorial(n)/factorial(n-r)
+	m := SectionMutiplication(n, n-r+1)
 
 	indices := make([]int, n)
 	indicesReverse := make([]int, r)
@@ -51,9 +51,8 @@ func Permutations(r int, els ... interface{}) (c[]string) {
 	for i := n; i > n - r; i-- {
 		cycles = append(cycles, i)
 	}
-	//fmt.Printf("%v", cycles)
-	//return
-	for m > len(c) {
+	lc := int64(len(c))
+	for m > lc {
 		for _, ii := range indicesReverse {
 			cycles[ii] -= 1
 			if cycles[ii] == 0 {
@@ -80,6 +79,7 @@ func Permutations(r int, els ... interface{}) (c[]string) {
 					it = append(it, pool[v])
 				}
 				c = append(c, strings.Join(it, ","))
+				lc = int64(len(c))
 				break
 			}
 		}
@@ -87,17 +87,28 @@ func Permutations(r int, els ... interface{}) (c[]string) {
 	return c
 }
 
-func factorial(n int) int {
+func factorial(n3 int) int64 {
+	n := int64(n3)
 	if n < 0 {
 		return 0
 	}
-	facVal := 1
-	i := 1
+	facVal := int64(1)
+	i := int64(1)
 	for i <= n {
 		facVal *= i
 		i++
 	}
 	return facVal
+}
+
+//SectionMutiplication 求区间内的乘积
+func SectionMutiplication(max int, min int) (res int64) {
+	res = int64(max)
+	for max > min {
+		max = max - 1
+		res *= int64(max)
+	}
+	return res
 }
 func Combinations(r int, els[]string) (c []string){
  	println(len(els))
@@ -110,7 +121,7 @@ func Combinations(r int, els[]string) (c []string){
 		return nil
 	}
 	// 返回结果的总个数
-	m := factorial(n)/factorial(r)/factorial(n-r)
+	m := SectionMutiplication(n, r)/factorial(r)
 	indices := make([]int, r)
 	indicesReverse := make([]int, r)
 	for i := 0; i < r; i++ {
@@ -122,13 +133,16 @@ func Combinations(r int, els[]string) (c []string){
 	}
 	// 获取第一个
 	first := pool[indices[0]: r]
+
 	firstItem := strings.Join(first, ",")
 	c = append(c, firstItem)
 	if r == n {
 		return c
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
-	for m > len(c) {
+	println(m, len(c), "ken")
+	lc := int64(len(c))
+	for m > lc {
 		var i = 0
 		for ii := range indicesReverse {
 			i = indicesReverse[ii]
@@ -154,6 +168,7 @@ func Combinations(r int, els[]string) (c []string){
 			it = append(it, pool[v])
 		}
 		c = append(c, strings.Join(it, ","))
+		lc = int64(len(c))
 	}
 
 	return c
