@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 func TestPermutations(t *testing.T) {
-	println("理论值(个)：", factorial(7)/factorial(7-3))
+	println("理论值(个)：", Factorial(7)/Factorial(7-3))
 	println("理论值(个)：", SectionMutiplication(7, 7-3+1))
 	//cs := Permutations(3,"a","b","c","d", "e", "f", "g")
 	//for c,vv := range cs {

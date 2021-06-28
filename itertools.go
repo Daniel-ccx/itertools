@@ -121,7 +121,7 @@ func Combinations(r int, els[]string) (c []string){
 		return nil
 	}
 	// 返回结果的总个数
-	m := SectionMutiplication(n, n-r+1)/factorial(r)
+	m := SectionMutiplication(n, n-r+1)/Factorial(r)
 	indices := make([]int, r)
 	indicesReverse := make([]int, r)
 	for i := 0; i < r; i++ {
