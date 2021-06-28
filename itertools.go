@@ -121,7 +121,7 @@ func Combinations(r int, els[]string) (c []string){
 		return nil
 	}
 	// 返回结果的总个数
-	m := SectionMutiplication(n, r)/factorial(r)
+	m := SectionMutiplication(n, n-r+1)/factorial(r)
 	indices := make([]int, r)
 	indicesReverse := make([]int, r)
 	for i := 0; i < r; i++ {
@@ -140,7 +140,6 @@ func Combinations(r int, els[]string) (c []string){
 		return c
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(indicesReverse)))
-	println(m, len(c), "ken")
 	lc := int64(len(c))
 	for m > lc {
 		var i = 0
